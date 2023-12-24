@@ -14,10 +14,12 @@ function SignUp() {
     setError("");
     try {
       const userData = await authService.createAccount(data);
+      console.log("user created successfully")
       if (userData) {
-        const userData = await authService.getCurrentUser();
-        if (userData) dispatch(login(userData));
-        navigate("/");
+        // const userData = await authService.getCurrentUser();
+        // if (userData) dispatch(login(userData));
+        // console.log(userData)
+        navigate("/login");
       }
     } catch (error) {
       setError(error.message);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, PostCard } from "postcss";
+import { Container, PostCard } from "../components/index.js";
 import appwriteService from "../appwrite/config";
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -17,7 +17,7 @@ function Home() {
           <div className="flex flex-wrap">
             <div className="p-2 w-full">
               <h1 className="text-2xl font-bold hover:text-gray-500">
-                Login to read posts
+                No post to show
               </h1>
             </div>
           </div>

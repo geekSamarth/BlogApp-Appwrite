@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import appwriteService from "../../appwrite/config";
 import { Button, Input, RTE, Select } from "../index";
-import { data } from "autoprefixer";
+// import { data } from "autoprefixer";
 
 export default function PostForm({ post }) {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ export default function PostForm({ post }) {
       // default values are the values which we use to complete the post form or which are necessary to complete the process
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slud || "",
+        slug: post?.slug || "",
         content: post?.content || "",
-        status: post?.status ?? "active",
+        status: post?.status || "active",
       },
     });
   const submit = async (data) => {
@@ -41,7 +41,7 @@ export default function PostForm({ post }) {
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
           ...data,
-          userId: userData.$id,
+          userId: selector.$id,
         });
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
@@ -55,7 +55,7 @@ export default function PostForm({ post }) {
       return value
         .trim()
         .toLowerCase()
-        .replace(/^[a-zA-Z\d\s]+/g, "-")
+        .replace(/[^a-zA-Z\d\s]+/g, "-")
         .replace(/\s/g, "-");
     return "";
   }, []);
