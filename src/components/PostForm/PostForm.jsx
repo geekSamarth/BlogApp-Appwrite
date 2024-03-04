@@ -8,7 +8,8 @@ import { Button, Input, RTE, Select } from "../index";
 
 export default function PostForm({ post }) {
   const navigate = useNavigate();
-  const selector = useSelector((state) => state.auth.userData);
+  const userData = useSelector((state) => state.auth.userData);
+  // console.log(userData.$id)
   const { register, handleSubmit, control, watch, setValue, getValues } =
     useForm({
       // default values are the values which we use to complete the post form or which are necessary to complete the process
@@ -30,10 +31,10 @@ export default function PostForm({ post }) {
       const dbPost = await appwriteService.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
-        if(dbPost) {
-          navigate(`/post/${dbPost.$id}`);
-        },
       });
+      if (dbPost) {
+        navigate(`/post/${dbPost.$id}`);
+      }
     } else {
       const file = await appwriteService.uploadFile(data.image[0]);
       if (file) {
@@ -41,8 +42,9 @@ export default function PostForm({ post }) {
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
           ...data,
-          userId: selector.$id,
+          userId: userData.$id,
         });
+        // console.log(dbPost)
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`);
         }
@@ -72,8 +74,8 @@ export default function PostForm({ post }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap text-white/80">
+      <div className="w-full lg:w-2/3 pt-16 lg:pt-0">
         <Input
           label="Title :"
           placeholder="Title"
@@ -98,16 +100,16 @@ export default function PostForm({ post }) {
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-1/3 px-2">
+      <div className="w-full lg:w-1/3 px-2">
         <Input
           label="Featured Image :"
           type="file"
-          className="mb-4"
+          className="mb-3.5"
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
         {post && (
-          <div className="w-full mb-4">
+          <div className="w-full mb-4 mt-10">
             <img
               src={appwriteService.getFilePreview(post.featuredImage)}
               alt={post.title}

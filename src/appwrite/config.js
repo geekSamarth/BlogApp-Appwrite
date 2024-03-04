@@ -14,9 +14,9 @@ export class Service {
     this.bucket = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
+  async createPost({ title,slug,content,featuredImage,status,userId }) {
     try {
-      return await this.databases.createDocument(
+      const response = await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug,
@@ -25,11 +25,12 @@ export class Service {
           content,
           featuredImage,
           status,
-          userId,
+          userId ,
         }
       );
+      return response;
     } catch (error) {
-      console.log("appwrite error", error);
+      console.log("appwrite error :: createPost error:", error);
     }
   }
 
@@ -47,7 +48,7 @@ export class Service {
         }
       );
     } catch (error) {
-      console.log("appwrite error", error);
+      console.log("appwrite error :: updatePost error", error);
     }
   }
 
@@ -58,9 +59,9 @@ export class Service {
         conf.appwriteCollectionId,
         slug
       );
-      return true; 
+      return true;
     } catch (error) {
-      console.log("appwwrite error", error);
+      console.log("appwwrite error :: deletePost error", error);
       return false;
     }
   }
@@ -73,20 +74,34 @@ export class Service {
         slug
       );
     } catch (error) {
-      console.log("appwrite error", error);
+      console.error("appwrite error :: getPost error", error);
       return false;
     }
   }
-
+  // logic for getting all posts from all users that are active
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
       return await this.databases.listDocuments(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         queries
-      )
+      );
     } catch (error) {
       console.log("appwrite error :: getposts ::error", error);
+      return false;
+    }
+  }
+
+  //  logic for getting all posts from a single user that are active and inactive
+  async getUserPosts(userId, queries = [Query.equal("userId", userId)]) {
+    try {
+      return await this.databases.listDocuments(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        queries
+      );
+    } catch (error) {
+      console.log("appwrite error :: getUserPosts ::error", error);
       return false;
     }
   }

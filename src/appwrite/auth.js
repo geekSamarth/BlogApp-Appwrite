@@ -25,7 +25,6 @@ export class AuthService {
         // console.log("useraccount", userAccount)
         // return this.login({ email, password });
         return userAccount;
-        
       } else {
         return userAccount;
       }
@@ -36,7 +35,7 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      const user =  await this.account.createEmailSession(email, password);
+      const user = await this.account.createEmailSession(email, password);
       return user;
     } catch (error) {
       throw error;
@@ -56,7 +55,33 @@ export class AuthService {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-     console.log(error)
+      console.log(error);
+    }
+  }
+
+  async forgetPassword({ email }) {
+    try {
+      return await this.account.createRecovery(
+        email,
+        "http://localhost:5173/reset-password"
+      );
+    } catch (error) {
+      console.log("Appwrite Service :: forgetPassword :: error", error);
+      throw error;
+    }
+  }
+
+  async resetPassword( userId, secret, password, confirmPassword ) {
+    try {
+      return await this.account.updateRecovery(
+        userId,
+        secret,
+        password,
+        confirmPassword
+      );
+    } catch (error) {
+      console.log("Appwrite Service :: resetPassword :: error", error);
+      throw error;
     }
   }
 }

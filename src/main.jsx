@@ -12,6 +12,9 @@ import AddPost from "./pages/AddPost.jsx";
 import AllPosts from "./pages/AllPosts.jsx";
 import EditPost from "./pages/EditPost.jsx";
 import Post from "./pages/Post.jsx";
+import ForgetPassword from "./pages/ForgetPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,7 +41,23 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/all-posts",
+        path: "/forget-password",
+        element: (
+          <AuthLayout authentication={false}>
+            <ForgetPassword />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/reset-password",
+        element: (
+          <AuthLayout authentication={false}>
+            <ResetPassword />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/your-posts",
         element: (
           <AuthLayout authentication>         
             <AllPosts />

@@ -12,6 +12,8 @@ import PostCard from "./PostCard";
 import AuthLayout from "./AuthLayout";
 import Select from "./Select";
 import Input from "./Input"
+import ForgetPassword from "./ForgetPassword";
+import ResetPassword from "./ResetPassword";
 export {
   Header,
   Footer,
@@ -26,5 +28,7 @@ export {
   PostCard,
   AuthLayout,
   Select,
-  Input
+  Input,
+  ForgetPassword,
+  ResetPassword,
 };

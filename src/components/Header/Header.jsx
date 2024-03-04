@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Logo, LogoutBtn } from "../index";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function Header() {
   const navItems = [
     {
       name: "Home",
-      slug: "/",
+      slug: "/", 
       active: true,
     },
     {
@@ -19,13 +19,13 @@ function Header() {
       active: !authStatus,
     },
     {
-      name: "signup",
+      name: "SignUp",
       slug: "/signup",
       active: !authStatus,
     },
     {
-      name: "All Posts",
-      slug: "/all-posts",
+      name: "Your Posts",
+      slug: "/your-posts",
       active: authStatus,
     },
     {
@@ -35,33 +35,35 @@ function Header() {
     },
   ];
   return (
-    <header className="py-3 shadow bg-gray-500">
+    <header className="text-[rgba(255,255,255,0.65)] bg-[rgba(17,17,17,0.4)] backdrop-blur-2xl border-[rgba(255,255,255,0.10)] border-b-[1px] fixed top-0  w-full z-20">
       <Container>
-        <nav className="flex">
-          <div className="mr-4">
+        <nav className="flex items-center justify-between py-1">
+          <div className="mr-4 flex items-center">
             <Link to="/">
-              <Logo width="70px" />
+              <Logo width="140px" />
             </Link>
           </div>
-          <ul className="flex ml-auto">
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
-                  <button
-                    onClick={() => navigate(item.slug)}
-                    className="inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
-                  >
-                    {item.name}
-                  </button>
+          <div className="">
+            <ul className="flex ml-auto gap-2.5 items-center">
+              {navItems.map((item) =>
+                item.active ? (
+                  <li key={item.name} className="">
+                    <button
+                      onClick={() => navigate(item.slug)}
+                      className="inline-bock px-6 py-1.5 duration-200 hover:bg-blue-100 rounded-xl hover:text-black transition-all ease-in-out "
+                    >
+                      {item.name}
+                    </button>
+                  </li>
+                ) : null
+              )}
+              {authStatus && (
+                <li>
+                  <LogoutBtn />
                 </li>
-              ) : null
-            )}
-            {authStatus && (
-              <li>
-                <LogoutBtn />
-              </li>
-            )}
-          </ul>
+              )}
+            </ul>
+          </div>
         </nav>
       </Container>
     </header>
