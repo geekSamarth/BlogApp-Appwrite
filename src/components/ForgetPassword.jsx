@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input, Button, Logo } from "../components";
 import { useForm } from "react-hook-form";
 import authService from "../appwrite/auth";
+import toast from "react-hot-toast";
 
 const ForgetPassword = () => {
   const { register, handleSubmit } = useForm();
@@ -12,14 +13,17 @@ const ForgetPassword = () => {
       const response = await authService.forgetPassword(data);
       if (response) {
         // console.log(response);
+        toast.success("Recovery email sent successfully");
+
       }
     } catch (error) {
       setError(error.message);
+      toast.error(error.message);
     }
   };
 
   return (
-    <div className="w-full flex justify-center items-center pt-20">
+    <div className="w-full flex justify-center items-center pt-20 ">
       <div
         className={`mx-auto w-full max-w-md bg-[hsl(240,9%,17%)] text-white/80 rounded-xl py-10 px-7 md:py-10 md:px-7 border-[1px] border-white/20`}
       >
@@ -28,7 +32,7 @@ const ForgetPassword = () => {
             <Logo width="100%" />
           </span>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight my-5">
+        <h2 className="text-center text-[20px] font-bold leading-tight my-5">
           Forget Password for your account
         </h2>
         {error && <p className="text-red-500 text-center mt-8">{error}</p>}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
@@ -6,14 +6,15 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthLayout, Login } from "./components/index.js";
-import Home from "./pages/Home.jsx";
-import Signup from "./pages/Signup.jsx";
-import AddPost from "./pages/AddPost.jsx";
-import AllPosts from "./pages/AllPosts.jsx";
-import EditPost from "./pages/EditPost.jsx";
-import Post from "./pages/Post.jsx";
-import ForgetPassword from "./pages/ForgetPassword.jsx";
-import ResetPassword from "./pages/ResetPassword.jsx";
+const Loader = lazy(() => import("./components/Loader/Loader.jsx"));
+const Home = lazy(() => import("./pages/Home.jsx"));
+const Signup = lazy(() => import("./pages/Signup.jsx"));
+const AddPost = lazy(() => import("./pages/AddPost.jsx"));
+const AllPosts = lazy(() => import("./pages/AllPosts.jsx"));
+const EditPost = lazy(() => import("./pages/EditPost.jsx"));
+const Post = lazy(() => import("./pages/Post.jsx"));
+const ForgetPassword = lazy(() => import("./pages/ForgetPassword.jsx"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Home />
+          </Suspense>
+        ),
       },
       {
         path: "/login",
@@ -36,7 +41,9 @@ const router = createBrowserRouter([
         path: "/signup",
         element: (
           <AuthLayout authentication={false}>
-            <Signup />
+            <Suspense fallback={<Loader />}>
+              <Signup />
+            </Suspense>
           </AuthLayout>
         ),
       },
@@ -44,7 +51,9 @@ const router = createBrowserRouter([
         path: "/forget-password",
         element: (
           <AuthLayout authentication={false}>
-            <ForgetPassword />
+            <Suspense fallback={<Loader />}>
+              <ForgetPassword />
+            </Suspense>
           </AuthLayout>
         ),
       },
@@ -52,15 +61,19 @@ const router = createBrowserRouter([
         path: "/reset-password",
         element: (
           <AuthLayout authentication={false}>
-            <ResetPassword />
+            <Suspense fallback={<Loader />}>
+              <ResetPassword />
+            </Suspense>
           </AuthLayout>
         ),
       },
       {
         path: "/your-posts",
         element: (
-          <AuthLayout authentication>         
-            <AllPosts />
+          <AuthLayout authentication>
+            <Suspense fallback={<Loader />}>
+              <AllPosts />
+            </Suspense>
           </AuthLayout>
         ),
       },
@@ -68,7 +81,9 @@ const router = createBrowserRouter([
         path: "/add-post",
         element: (
           <AuthLayout authentication>
-            <AddPost />
+            <Suspense fallback={<Loader />}>
+              <AddPost />
+            </Suspense>
           </AuthLayout>
         ),
       },
@@ -76,7 +91,9 @@ const router = createBrowserRouter([
         path: "/edit-post/:slug",
         element: (
           <AuthLayout authentication>
-            <EditPost />
+            <Suspense fallback={<Loader />}>
+              <EditPost />
+            </Suspense>
           </AuthLayout>
         ),
       },
@@ -84,7 +101,9 @@ const router = createBrowserRouter([
         path: "/post/:slug",
         element: (
           <AuthLayout authentication>
-            <Post />
+            <Suspense fallback={<Loader />}>
+              <Post />
+            </Suspense>
           </AuthLayout>
         ),
       },
@@ -94,7 +113,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

@@ -19,15 +19,15 @@ function SignUp() {
         // if (userData) dispatch(login(userData));
         // console.log(userData)
         navigate("/login");
-        toast.success("User created successfully!! ")
+        toast.success("User created successfully!! ");
       }
     } catch (error) {
       setError(error.message);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
   return (
-    <div className="flex items-center justify-center pt-20">
+    <div className="w-full flex items-center justify-center pt-20 mx-2">
       <div
         className={`mx-auto w-full max-w-lg bg-[hsl(240,9%,17%)] text-white/80 rounded-xl py-10 px-7 md:py-10 md:px-7 border-[1px] border-white/20   z-10`}
       >

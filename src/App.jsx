@@ -6,7 +6,7 @@ import { login, logout } from "./store/authSlice";
 import { Outlet } from "react-router-dom";
 import { Header, Footer } from "./components";
 import "./App.css";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -15,28 +15,21 @@ function App() {
     (async () => {
       try {
         const userData = await authService.getCurrentUser();
-        if(userData) dispatch(login({userData}))
-        else dispatch(logout())
-      setLoading(false)
+        if (userData) dispatch(login(userData));
+        else dispatch(logout());
+        setLoading(false);
       } catch (error) {
-        console.log("Error in getting user: ",error);
+        console.log("Error in getting user: ", error);
+        toast.error("Login First to access !!");
       }
-      // .then((userData) => {
-      //   if (userData) {
-      //     dispatch(login({userData}));
-      //   } else {
-      //     dispatch(logout());
-      //   }
-      // })
-      // .finally(() => setLoading(false));
     })();
   }, []);
   return !loading ? (
     <div className="min-h-screen flex flex-wrap content-between ">
       <div className="w-full block">
         <Header />
-        <main className="bg-[#111111] min-h-screen flex justify-center items-center">
-          <Outlet />
+        <main className="bg-[#111111] min-h-screen flex justify-center">
+          <Outlet /> 
         </main>
         <Footer />
       </div>

@@ -3,28 +3,37 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { Button, Input, Logo } from "../components";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
   const { register, handleSubmit } = useForm();
   const [error, setError] = React.useState("");
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
-	const secret = urlParams.get("secret");
-	const userId = urlParams.get("userId");
- 
-  
+  const secret = urlParams.get("secret");
+  const userId = urlParams.get("userId");
+
   const resetPassword = async (data) => {
     try {
-      const result = await authService.resetPassword(userId,secret,data.newPassword,data.confirmPassword);
-      // console.log(result);
-      navigate("/login");
+      const result = await authService.resetPassword(
+        userId,
+        secret,
+        data.newPassword,
+        data.confirmPassword
+      );
+      if (result) {
+        // console.log(result);
+        toast.success("Password reset successfully");
+        navigate("/login");
+      }
     } catch (error) {
       setError(error.message);
+      toast.error(error.message);
     }
   };
 
   return (
-    <div className="flex items-center justify-center pt-20">
+    <div className="flex items-center justify-center pt-20 mx-2">
       <div
         className={`mx-auto w-full max-w-lg bg-[hsl(240,9%,17%)] text-white/80 rounded-xl py-10 px-7 md:py-10 md:px-7 border-[1px] border-white/20   z-10`}
       >
@@ -33,12 +42,12 @@ const ResetPassword = () => {
             <Logo width="100%" />
           </span>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight my-5">
+        <h2 className="text-center text-xl font-bold leading-tight my-5">
           Reset Password for your account
         </h2>
         {error && <p className="text-red-500 mt-4 mb-2 text-center">{error}</p>}
         <form onSubmit={handleSubmit(resetPassword)}>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col">
             <Input
               label="New Password"
               type="password"

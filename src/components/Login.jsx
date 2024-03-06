@@ -20,7 +20,7 @@ function Login() {
         const response = await authService.getCurrentUser();
         if (response) {
           dispatch(authLogin(response));
-          toast.success("User LoggedIn Successfully!")
+          toast.success("User Logged In Successfully!")
         }
         navigate("/");
       }
