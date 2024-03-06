@@ -3,16 +3,17 @@ import { Container, PostCard } from "../components";
 import service from "../appwrite/config";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import Loader from "../components/Loader/Loader.jsx";
 
 function AllPosts() {
   const [post, setPosts] = useState([]);
-  // console.log(userId);
+  const [isLoading, setIsLoading] = useState(true);
   const userId = useSelector((state) =>
     state.auth.userData ? state.auth.userData.$id : null
   );
+
   useEffect(() => {
     service.getUserPosts(userId).then((posts) => {
-      // console.log(posts)
       if (posts) {
         setPosts(posts.documents);
         toast.success("Posts loaded successfully");
@@ -21,6 +22,13 @@ function AllPosts() {
       }
     });
   }, []);
+  if (post.length === 0) {
+    return (
+      <div className="w-full h-96 flex items-center justify-center">
+        <h1 className="text-2xl text-white">No Posts Found</h1>
+      </div>
+    );
+  }
   return (
     <div className="w-full pt-24 pb-10">
       <Container>

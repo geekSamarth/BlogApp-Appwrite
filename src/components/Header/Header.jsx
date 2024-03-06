@@ -10,7 +10,7 @@ function Header() {
   const navItems = [
     {
       name: "Home",
-      slug: "/", 
+      slug: "/",
       active: true,
     },
     {
@@ -47,13 +47,19 @@ function Header() {
             <ul className="flex ml-auto gap-1  md:gap-2.5 items-center">
               {navItems.map((item) =>
                 item.active ? (
-                  <li key={item.name} className="">
-                    <button
-                      onClick={() => navigate(item.slug)}
-                      className="inline-bock px-2.5 md:px-6 py-1.5 duration-200 hover:bg-blue-100 rounded-xl hover:text-black transition-all ease-in-out text-[15px] md:text-base whitespace-nowrap"
+                  <li key={item.name} className="flex">
+                    <NavLink
+                      to={item.slug}
+                      className={({ isActive }) =>
+                        `font-medium mr-5 p-1 text-[14px] md:text-[18px] ${
+                          isActive
+                            ? "text-white/90 border-b  transition-all duration-300"
+                            : "text-white/65 hover:text-white/90 "
+                        }`
+                      }
                     >
                       {item.name}
-                    </button>
+                    </NavLink>
                   </li>
                 ) : null
               )}
