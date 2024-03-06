@@ -20,7 +20,7 @@ function LogoutBtn() {
   };
   return (
     <button
-      className="inline-block px-2 md:px-4 py-1.5 md:ml-4 duration-200 rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-600 focus:ring-opacity-50 text-[15px] md:text-[18px] font-medium"
+      className="inline-block px-2 md:px-4 py-1.5 md:ml-4 duration-200 rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 focus:outline-none focus:ring-2 focus:ring-fuchsia-600 focus:ring-opacity-50 text-[13px] md:text-[18px] font-medium"
       onClick={() => logoutHandler()}
     >
       Logout

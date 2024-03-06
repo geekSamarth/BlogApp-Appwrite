@@ -37,7 +37,7 @@ function Header() {
   return (
     <header className="text-[rgba(255,255,255,0.65)] bg-[rgba(17,17,17,0.4)] backdrop-blur-2xl border-[rgba(255,255,255,0.10)] border-b-[1px] fixed top-0  w-full z-20">
       <Container>
-        <nav className="flex items-center justify-between py-2">
+        <nav className="flex items-center justify-between py-2 md:mr-3">
           <div className="mr-4 flex items-center">
             <Link to="/">
               <Logo width="140px" />
@@ -51,7 +51,7 @@ function Header() {
                     <NavLink
                       to={item.slug}
                       className={({ isActive }) =>
-                        `font-medium mr-5 p-1 text-[14px] md:text-[18px] ${
+                        `font-medium mr-1.5 md:mr-5 p-1 text-[13px] whitespace-nowrap md:text-[18px] ${
                           isActive
                             ? "text-white/90 border-b  transition-all duration-300"
                             : "text-white/65 hover:text-white/90 "
