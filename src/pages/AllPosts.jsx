@@ -11,23 +11,32 @@ function AllPosts() {
   const userId = useSelector((state) =>
     state.auth.userData ? state.auth.userData.$id : null
   );
+  const status = useSelector((state) => state.auth.status);
 
   useEffect(() => {
     service.getUserPosts(userId).then((posts) => {
       if (posts) {
         setPosts(posts.documents);
-        toast.success("Posts loaded successfully");
+        toast.success("Your Posts loaded successfully");
+        setIsLoading(false);
       } else {
         toast.error("Failed to load posts. Try Again!!");
+        setIsLoading(false)
       }
     });
   }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
   if (post.length === 0) {
     return (
       <div className="w-full h-96 flex items-center justify-center">
         <h1 className="text-2xl text-white">No Posts Found</h1>
       </div>
     );
+  }
+  if (status === false) {
+    setPosts([]);
   }
   return (
     <div className="w-full pt-24 pb-10">
@@ -43,6 +52,7 @@ function AllPosts() {
               title={post.title}
               featuredImage={post.featuredImage}
               $createdAt={post.$createdAt}
+              content={post.content}
             />
           ))}
         </div>

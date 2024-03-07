@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 export default function PostForm({ post }) {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+  const [error, setError] = useState("");
   // console.log(userData.$id)
   const { register, handleSubmit, control, watch, setValue, getValues } =
     useForm({
@@ -41,7 +42,12 @@ export default function PostForm({ post }) {
       }
     } else {
       const file = await appwriteService.uploadFile(data.image[0]);
-      if (file) {
+      const maxImageSize = 300 * 1024;
+      if (file && file.sizeOriginal > maxImageSize) {
+        {
+          setError("Image size should be less than 300kb");
+        }
+      } else {
         const fileId = file.$id;
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
@@ -105,7 +111,7 @@ export default function PostForm({ post }) {
             }}
           />
           <RTE
-            label="Content : *"
+            label="Content : (Max 5000 Characters allowed) *"
             name="content"
             control={control}
             defaultValue={getValues("content")}
@@ -113,12 +119,13 @@ export default function PostForm({ post }) {
         </div>
         <div className="w-full lg:w-1/3 py-6 md:py-0 lg:px-5">
           <Input
-            label="Featured Image : *"
+            label="Featured Image : (max size: 300 Kb)*"
             type="file"
-            className="mb-3.5"
+            className=""
             accept="image/png, image/jpg, image/jpeg, image/gif"
             {...register("image", { required: !post })}
           />
+          {error && <p className="text-red-500 text-[16px]">{error}</p>}
           {post && (
             <div className="w-full mb-4 mt-10">
               <img

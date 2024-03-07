@@ -38,14 +38,14 @@ export default function Post() {
   };
 
   return post ? (
-    <div className="py-8 pt-24">
+    <div className="py-8 pt-24 px-2">
       <Container>
         <h1 className="text-3xl font-semibold text-white/80 tracking-wider mb-10 ml-2.5 text-center md:text-left">Post</h1>
-        <div className="w-full flex justify-center mb-4  border-white/30 border-[1px] rounded-xl p-2">
+        <div className="w-full md:w-[600px] lg:w-[800px] xl:w-[1100px] h-[500px] flex justify-center mx-auto mb-4  border-white/30 border-[1px] rounded-xl p-0.5">
           <img
             src={appwriteService.getFilePreview(post.featuredImage)}
             alt={post.title}
-            className="w-full md:w-[600px] lg:w-[800px] xl:w-[1000px] h-[500px] rounded-xl object-cover"
+            className="w-full h-full  rounded-xl object-cover"
           />
 
           
@@ -55,7 +55,7 @@ export default function Post() {
         </div>
         <div className="browser-css text-white ml-2">{parse(post.content)}</div>
             
-        <span className="text-white/60 text-lg font-medium mt-5 block ml-2">Created At : {DateTime.fromISO(post.$createdAt).toLocaleString(DateTime.DATETIME_MED)}</span>
+        <span className="text-white/60  font-medium mt-5 block ml-2">Created At : {DateTime.fromISO(post.$createdAt).toLocaleString(DateTime.DATETIME_MED)}</span>
         {isAuthor && (
             <div className="flex justify-end mt-9">
               <Link to={`/edit-post/${post.$id}`}>

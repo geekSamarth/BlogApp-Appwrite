@@ -9,8 +9,8 @@ const Loader = () => {
         <div className="h-4 w-4 rounded-full  bg-fuchsia-600  animate-bounce"></div>
       </div>
       <div className="mt-4 text-center">
-        <p className="text-lg font-semibold text-gray-700">Loading...</p>
-        <p className="text-sm text-gray-500">Your data is on its way!</p>
+        <p className="text-lg font-semibold text-gray-100">Loading...</p>
+        <p className="text-sm text-gray-200">Your data is on its way!</p>
       </div>
     </div>
   );

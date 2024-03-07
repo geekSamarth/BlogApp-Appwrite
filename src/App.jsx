@@ -15,12 +15,16 @@ function App() {
     (async () => {
       try {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(login(userData));
-        else dispatch(logout());
+        if (userData) {
+          dispatch(login(userData));
+        } else {
+          toast.error("Login First to access !!");
+          dispatch(logout());
+        }
         setLoading(false);
       } catch (error) {
-        console.log("Error in getting user: ", error);
-        toast.error("Login First to access !!");
+        console.log("getCurrentUser :: error", error);
+        toast.error("Error in fetching user !!");
       }
     })();
   }, []);
@@ -29,7 +33,7 @@ function App() {
       <div className="w-full block">
         <Header />
         <main className="bg-[#111111] min-h-screen flex justify-center">
-          <Outlet /> 
+          <Outlet />
         </main>
         <Footer />
       </div>

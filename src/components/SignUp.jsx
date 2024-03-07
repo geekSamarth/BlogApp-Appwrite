@@ -12,7 +12,7 @@ function SignUp() {
     setError("");
     try {
       const userData = await authService.createAccount(data);
-      console.log("user created successfully");
+      // console.log("user created successfully");
       // console.log(userData)
       if (userData) {
         // const userData = await authService.getCurrentUser();
